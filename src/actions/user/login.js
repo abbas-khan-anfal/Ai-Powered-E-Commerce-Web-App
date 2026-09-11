@@ -54,14 +54,18 @@ export async function loginUserAction({ email, password }) {
 
     // cookies
     const store = await cookies();
-    store.set("ecom-dash-token", token, {
-        httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60,
-    });
-    store.set("ecom-dash-user", JSON.stringify(tokenUser), {
-        httpOnly: true,
-        maxAge: 7 * 24 * 60 * 60,
-    });
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax", // Secure and perfect for both local and production environments
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: "/", // Ensures the cookie is accessible everywhere on your dashboard
+  };
+
+
+    store.set("ecom-dash-token", token, cookieOptions);
+    store.set("ecom-dash-user", JSON.stringify(tokenUser), cookieOptions);
 
     return {
       success: true,
