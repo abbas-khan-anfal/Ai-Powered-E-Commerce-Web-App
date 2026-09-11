@@ -8,7 +8,8 @@ import productModel from "@/models/productModel";
 export async function GET(req) {
   try {
     await connectDB();
-    const { user } = await auth();
+    const session = await auth();
+    const user = session?.user;
     if(!user)
     {
       return NextResponse.json({
@@ -28,6 +29,7 @@ export async function GET(req) {
       { status: 200 }
     );
   } catch (err) {
+    console.log("Error in cart ", err);
     return NextResponse.json(
       { success: false, message: err?.message || "Something went wrong" },
       { status: 500 }

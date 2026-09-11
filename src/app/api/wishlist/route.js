@@ -8,7 +8,8 @@ import productModel from "@/models/productModel";
 export async function GET(req) {
   try {
     await connectDB();
-    const { user } = await auth();
+    const session = await auth();
+    const user = session?.user;
     if(!user)
     {
       return NextResponse.json({
