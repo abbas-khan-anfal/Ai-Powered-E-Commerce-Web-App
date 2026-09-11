@@ -37,7 +37,7 @@ export default async function Page({ searchParams }) {
   const category = params?.category ?? "";
   const search = params?.search ?? "";
 
-  const url = `http://localhost:3000/api/product/get-products?page=${page}${
+  const url = `https://ai-powered-ecommerceapp.vercel.app/api/product/get-products?page=${page}${
     min !== null ? `&min=${min}` : ""
   }${
     max !== null ? `&max=${max}` : ""
