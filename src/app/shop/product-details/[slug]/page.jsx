@@ -20,7 +20,7 @@ export default async function Page({params}) {
 
   const p = await params;
   const slug = p.slug || "";
-  const res = await fetch(`http://localhost:3000/api/product/get-product/${slug}?isDashboard=${false}`, {
+  const res = await fetch(`https://ai-powered-ecommerceapp.vercel.app/api/product/get-product/${slug}?isDashboard=${false}`, {
     cache: "no-store",
   });
   const jsonData = await res.json();
