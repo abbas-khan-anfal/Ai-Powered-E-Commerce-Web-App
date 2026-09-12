@@ -52,7 +52,7 @@ export async function removeCartItemAction(itemId){
             return { success : false, message : "Invalid product id" };
         }
         await connectDB();
-        const productExistInCart = await cartModel.findOne({ _id : itemId, userId : user?.id }).populate("productId", "name discountPrice img_paths");
+        const productExistInCart = await cartModel.findOne({ _id : itemId, userId : user?.id }).populate("productId", "_id");
         if(!productExistInCart)
         {
             return { success : false, message : "Item not found in cart" };
@@ -65,6 +65,7 @@ export async function removeCartItemAction(itemId){
     }
     catch(error)
     {
+        console.log("Remove cart item : ", error);
         return { success : false, message : "Something went wrong" };
     }
 }
