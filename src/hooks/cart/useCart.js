@@ -40,7 +40,7 @@ function useCart() {
         toast.success(res?.message);
       }
     } catch (error) {
-      console.log(error?.message);
+      console.log(error?.response?.data?.message || error?.message);
     }
   };
 
