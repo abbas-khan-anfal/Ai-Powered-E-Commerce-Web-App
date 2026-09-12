@@ -39,6 +39,10 @@ function useCart() {
         getCartItemsHandler();
         toast.success(res?.message);
       }
+      else
+      {
+        toast.error(res?.message || "Something went wrong!");
+      }
     } catch (error) {
       console.log(error?.response?.data?.message || error?.message);
     }
