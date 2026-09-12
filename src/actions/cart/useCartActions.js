@@ -1,6 +1,7 @@
 'use server';
 
 import cartModel from "@/models/cartModel";
+import productModel from "@/models/productModel";
 import mongoose from "mongoose";
 import { auth } from "@/auth";
 import connectDB from "@/lib/db";
@@ -42,7 +43,6 @@ export async function removeCartItemAction(itemId){
     {
         const session = await auth();
         const user = session?.user;
-        console.log("Remove cart item : ", user);
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -57,15 +57,11 @@ export async function removeCartItemAction(itemId){
         {
             return { success : false, message : "Item not found in cart" };
         }
-        console.log("Remove cart item : product exist or not ", productExistInCart);
         await cartModel.deleteOne({ _id : itemId, userId : user?.id });
-
-        console.log("Remove cart item : Product removed from cart");
         return { success : true, message : "Item removed from cart" };
     }
     catch(error)
     {
-        console.log("Remove cart item : ", error);
         return { success : false, message : "Something went wrong" };
     }
 }

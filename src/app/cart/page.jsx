@@ -71,18 +71,19 @@ export default function CartPage() {
   };
 
   const removeItem = async (id) => {
-    console.log("Remove cart Item function success: ", id);
     if (!id || id?.toString().trim() == "") return;
     setIsRemoveLoading(id?.toString());
     try {
       const res = await removeCartItemAction(id);
-      console.log("Remove cart Item function success : ", res);
       if (res?.success) {
         removeFromCart(id);
       }
+      else
+      {
+        console.log(res?.message);
+      }
     } catch (error) {
       console.log(error?.message);
-      console.log("Remove cart Item function error : ", error);
     } finally {
       setIsRemoveLoading("");
     }
