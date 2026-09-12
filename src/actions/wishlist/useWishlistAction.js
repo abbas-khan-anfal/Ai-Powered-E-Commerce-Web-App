@@ -3,11 +3,14 @@
 import wishlistModel from "@/models/wishlistModel";
 import mongoose from "mongoose";
 import { auth } from "@/auth";
+import connectDB from "@/lib/db";
 
 export async function addToWishlistAction(productId){
     try
     {
-        const { user } = await auth();
+        const session = await auth();
+        const user = session?.user;
+        console.log("💛remove to Wishlist Route : ", user);
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -17,6 +20,7 @@ export async function addToWishlistAction(productId){
         {
             return { success : false, message : "Invalid product id" };
         }
+        await connectDB();
         const productExistInWishlit = await wishlistModel.findOne({ userId : user?.id, productId });
         if(productExistInWishlit)
         {
@@ -38,7 +42,9 @@ export async function addToWishlistAction(productId){
 export async function removeWishlistItemAction(itemId){
     try
     {
-        const { user } = await auth();
+        const session = await auth();
+        const user = session?.user;
+        console.log("💛remove product from Wishlist Route : ", user);
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -47,6 +53,7 @@ export async function removeWishlistItemAction(itemId){
         {
             return { success : false, message : "Invalid product id" };
         }
+        await connectDB();
         const productExistInWishlit = await wishlistModel.findOne({ _id : itemId, userId : user?.id });
         if(!productExistInWishlit)
         {

@@ -24,7 +24,9 @@ function ProductCard({ product }) {
   const addToWishlistHandler = async (productId) => {
     if (!productId || productId === "") return;
     try {
+      
       const res = await addToWishlistAction(productId);
+      console.log("Product Id : ", productId);
       if (res?.success) {
         setIsWishlisted((prev) => !prev);
         router.refresh();
