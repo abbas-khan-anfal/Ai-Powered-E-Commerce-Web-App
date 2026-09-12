@@ -67,7 +67,8 @@ export default function LoginPage() {
     else
     {
       toast.success("Logged in successful");
-      router.push("/");
+      // hard reload to path /
+      window.location.href = "/";
     }
     }
     catch(error)

@@ -71,6 +71,9 @@ function Navbar() {
   // signout handler
   const signoutHandler = async () => {
     await signOut();
+    toast.success("Signed out successfully");
+    // hard refresh / reload the page
+    window.location.reload();
   };
 
   // get cart items and count
@@ -105,7 +108,7 @@ function Navbar() {
   // update url
 const updateSearchInUrlHandler = (e) => {
   e.preventDefault();
-
+  if(searchTerm?.trim() == "") return;
   const newParams = new URLSearchParams();
 
   newParams.set("search", searchTerm);
@@ -315,7 +318,7 @@ const updateSearchInUrlHandler = (e) => {
       </div>
 
       {/* ================= MOBILE SEARCH ================= */}
-      <div className="md:hidden px-3 pb-2">
+      <form className="md:hidden px-3 pb-2" onSubmit={updateSearchInUrlHandler}>
         <div className="flex">
           <Input
             placeholder="Search..."
@@ -323,11 +326,11 @@ const updateSearchInUrlHandler = (e) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
           />
-          <Button className="rounded-r-md">
+          <Button className="rounded-r-md" type="submit">
             <Search size={18} />
           </Button>
         </div>
-      </div>
+      </form>
 
       {/* ================= DESKTOP NAV LINKS ================= */}
       <div className="hidden md:flex items-center gap-6 px-6 py-2 border-t">
@@ -360,7 +363,7 @@ const updateSearchInUrlHandler = (e) => {
           <Link href="/" className="block hover:text-primary">
             Home
           </Link>
-          <Link href="/" className="block hover:text-primary">
+          <Link href="/shop" className="block hover:text-primary">
             Shop
           </Link>
 
