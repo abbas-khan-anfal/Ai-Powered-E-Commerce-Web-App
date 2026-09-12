@@ -10,7 +10,6 @@ export async function addToWishlistAction(productId){
     {
         const session = await auth();
         const user = session?.user;
-        console.log("💛remove to Wishlist Route : ", user);
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -44,7 +43,6 @@ export async function removeWishlistItemAction(itemId){
     {
         const session = await auth();
         const user = session?.user;
-        console.log("💛remove product from Wishlist Route : ", user);
         if(!user)
         {
             return { success : false, message : "Please login to continue" };

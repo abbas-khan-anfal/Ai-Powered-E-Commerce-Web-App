@@ -3,11 +3,13 @@
 import cartModel from "@/models/cartModel";
 import mongoose from "mongoose";
 import { auth } from "@/auth";
+import connectDB from "@/lib/db";
 
 export async function addToCartAction(productId){
     try
     {
-        const { user } = await auth();
+        const session = await auth();
+        const user = session?.user;
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -17,6 +19,7 @@ export async function addToCartAction(productId){
         {
             return { success : false, message : "Invalid product id" };
         }
+        await connectDB();
         const productExistInCart = await cartModel.findOne({ userId : user?.id, productId });
         if(productExistInCart)
         {
@@ -37,7 +40,8 @@ export async function addToCartAction(productId){
 export async function removeCartItemAction(itemId){
     try
     {
-        const { user } = await auth();
+        const session = await auth();
+        const user = session?.user;
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -46,6 +50,7 @@ export async function removeCartItemAction(itemId){
         {
             return { success : false, message : "Invalid product id" };
         }
+        await connectDB();
         const productExistInCart = await cartModel.findOne({ _id : itemId, userId : user?.id }).populate("productId", "name discountPrice img_paths");
         if(!productExistInCart)
         {
@@ -65,7 +70,8 @@ export async function removeCartItemAction(itemId){
 export async function updateCartAction(itemId, qty = 1){
     try
     {
-        const { user } = await auth();
+        const session = await auth();
+        const user = session?.user;
         if(!user)
         {
             return { success : false, message : "Please login to continue" };
@@ -78,6 +84,7 @@ export async function updateCartAction(itemId, qty = 1){
         {
             return { success : false, message : "Quantity must 1 or greater" };
         }
+        await connectDB();
         const productExistInCart = await cartModel.findOne({ _id : itemId, userId : user?.id });
         if(!productExistInCart)
         {
