@@ -108,9 +108,10 @@ export async function POST(req)
                   price_data: {
                     currency: "usd",
             
+                    // image : item?.productId.img_paths[0]
                     product_data: {
                       name: item?.productId.name,
-                    //   images: [item?.productId.images[0].url]
+                      images: [item?.productId?.img_paths?.[0]]
                     },
             
                     unit_amount: item?.productId.discountPrice * 100
