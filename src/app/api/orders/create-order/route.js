@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import connectDB from "@/lib/db";
 import cartModel from "@/models/cartModel";
 import { orderModel, sellerOrderModel } from "@/models/orderModel";
+import productModel from "@/models/productModel";
 import { NextResponse } from "next/server";
 import { stripe } from '@/lib/stripe';
 
@@ -10,7 +11,8 @@ export async function POST(req)
 {
     try
     {
-        const { user } = await auth();
+        const session = await auth();
+        const user = session?.user;
         const { fullName, email, phone, city, address1, address2, paymentMethod } = await req.json();
 
         if(!fullName || !email || !phone || !city || !address1 || !address2 || !paymentMethod)
