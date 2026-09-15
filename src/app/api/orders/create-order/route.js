@@ -9,6 +9,7 @@ import { stripe } from '@/lib/stripe';
 
 export async function POST(req)
 {
+    console.log("🔥 CREATE ORDER API HIT");
     try
     {
         const session = await auth();

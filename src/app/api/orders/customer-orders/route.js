@@ -3,6 +3,7 @@ import connectDB from "@/lib/db";
 import getLoggedInUser from "@/lib/getLoggedInUser";
 import { orderModel, sellerOrderModel } from "@/models/orderModel";
 import { NextResponse } from "next/server";
+import productModel from "@/models/productModel";
 
 // get all orders
 export async function GET(req) {

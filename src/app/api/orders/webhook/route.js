@@ -1,3 +1,4 @@
+import connectDB from "@/lib/db";
 import { stripe } from "@/lib/stripe";
 import cartModel from "@/models/cartModel";
 import { orderModel, sellerOrderModel } from "@/models/orderModel";
@@ -29,6 +30,8 @@ export async function POST(req) {
     const products = JSON.parse(session.metadata.products);
 
     console.log("💚 PAYMENT SUCCESS");
+
+    await connectDB();
 
     const order = await orderModel.create({
       userId: session.metadata.userId,
